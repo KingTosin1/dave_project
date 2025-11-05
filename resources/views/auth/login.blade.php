@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Course System</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -192,6 +192,7 @@
             @if (Route::has('password.request'))
                 <a href="{{ route('password.request') }}">Forgot your password?</a>
             @endif
+            <p class="mt-2 mb-0">Don't have an account? <a href="{{ route('register') }}">Register here</a></p>
         </div>
     </div>
 
