@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('grades', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
+            $table->foreignId('course_id')->constrained()->onDelete('cascade');
+            $table->decimal('score', 5, 2); // e.g., 85.50
+            $table->string('grade'); // A, B, C, D, E, F
+            $table->decimal('points', 3, 2); // 5.00, 4.00, etc.
+            $table->timestamps();
+            $table->unique(['student_id', 'course_id']);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('grades');
+    }
+};
