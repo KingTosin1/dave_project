@@ -16,18 +16,7 @@
             </button>
         </div>
 
-        <!-- User Info Card -->
-        <div class="user-card mx-3 mb-4">
-            <div class="d-flex align-items-center">
-                <div class="avatar-circle bg-gradient-info text-white me-3">
-                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                </div>
-                <div class="flex-grow-1">
-                    <div class="fw-bold text-white small">{{ auth()->user()->name }}</div>
-                    <div class="text-light small opacity-75">{{ auth()->user()->email }}</div>
-                </div>
-            </div>
-        </div>
+
 
         <!-- Navigation Menu -->
         <ul class="nav flex-column px-2">

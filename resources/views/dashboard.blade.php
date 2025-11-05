@@ -513,52 +513,156 @@
 
                 @elseif(auth()->user()->role === 'student')
                     <!-- Student Dashboard -->
-                    <div class="row">
-                        <div class="col-md-4 mb-4">
-                            <div class="card card-hover text-white bg-primary">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">{{ auth()->user()->student->calculateGPA() ?? 'N/A' }}</h5>
-                                    <p class="card-text">Current GPA</p>
-                                    <i class="fas fa-graduation-cap fa-2x"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4">
-                            <div class="card card-hover text-white bg-success">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">{{ auth()->user()->student->registrations()->where('status', 'approved')->count() }}</h5>
-                                    <p class="card-text">Registered Courses</p>
-                                    <i class="fas fa-book-open fa-2x"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4">
-                            <div class="card card-hover text-white bg-info">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">{{ auth()->user()->student->level }}</h5>
-                                    <p class="card-text">Current Level</p>
-                                    <i class="fas fa-layer-group fa-2x"></i>
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="welcome-card">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h2 class="mb-1"><i class="fas fa-user-graduate me-2 text-success"></i>Welcome back, {{ auth()->user()->name }}!</h2>
+                                        <p class="mb-0 text-muted">Track your academic progress and manage your courses</p>
+                                    </div>
+                                    <div class="welcome-icon">
+                                        <i class="fas fa-graduation-cap"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Statistics Row -->
+                    <div class="row mb-4">
+                        <div class="col-md-4 mb-4">
+                            <div class="card stat-card text-white bg-gradient-primary">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h4 class="card-title mb-1">{{ auth()->user()->student->calculateGPA() ?? 'N/A' }}</h4>
+                                            <p class="card-text mb-0">Current GPA</p>
+                                        </div>
+                                        <div class="stat-icon">
+                                            <i class="fas fa-graduation-cap"></i>
+                                        </div>
+                                    </div>
+                                    <div class="progress mt-2" style="height: 4px;">
+                                        <div class="progress-bar" style="width: {{ auth()->user()->student->calculateGPA() ? '100' : '0' }}%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card stat-card text-white bg-gradient-success">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h4 class="card-title mb-1">{{ auth()->user()->student->registrations()->where('status', 'approved')->count() }}</h4>
+                                            <p class="card-text mb-0">Registered Courses</p>
+                                        </div>
+                                        <div class="stat-icon">
+                                            <i class="fas fa-book-open"></i>
+                                        </div>
+                                    </div>
+                                    <div class="progress mt-2" style="height: 4px;">
+                                        <div class="progress-bar" style="width: {{ auth()->user()->student->registrations()->where('status', 'approved')->count() > 0 ? '100' : '0' }}%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card stat-card text-white bg-gradient-info">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <h4 class="card-title mb-1">{{ auth()->user()->student->level }}</h4>
+                                            <p class="card-text mb-0">Current Level</p>
+                                        </div>
+                                        <div class="stat-icon">
+                                            <i class="fas fa-layer-group"></i>
+                                        </div>
+                                    </div>
+                                    <div class="progress mt-2" style="height: 4px;">
+                                        <div class="progress-bar" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions Row -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h4 class="mb-3"><i class="fas fa-bolt me-2 text-warning"></i>Quick Actions</h4>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-md-6 mb-4">
-                            <div class="card card-hover">
+                            <div class="card action-card h-100">
                                 <div class="card-body">
-                                    <h5 class="card-title">Course Registration</h5>
-                                    <p class="card-text">Register for available courses</p>
-                                    <a href="{{ route('student.register') }}" class="btn btn-primary btn-custom">Register Courses</a>
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="action-icon bg-primary">
+                                            <i class="fas fa-book-open"></i>
+                                        </div>
+                                        <div class="ms-3">
+                                            <h5 class="card-title mb-1">Course Registration</h5>
+                                            <p class="card-text text-muted">Register for available courses</p>
+                                        </div>
+                                    </div>
+                                    <div class="action-stats mb-3">
+                                        <span class="badge bg-primary">{{ auth()->user()->student->registrations()->where('status', 'approved')->count() }} Registered</span>
+                                        <span class="badge bg-warning ms-2">{{ auth()->user()->student->registrations()->where('status', 'pending')->count() }} Pending</span>
+                                    </div>
+                                    <a href="{{ route('student.register') }}" class="btn btn-primary btn-custom w-100">
+                                        <i class="fas fa-plus me-2"></i>Register Courses
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 mb-4">
-                            <div class="card card-hover">
+                            <div class="card action-card h-100">
                                 <div class="card-body">
-                                    <h5 class="card-title">View Results</h5>
-                                    <p class="card-text">Check your grades and GPA</p>
-                                    <a href="{{ route('student.results') }}" class="btn btn-success btn-custom">View Results</a>
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="action-icon bg-success">
+                                            <i class="fas fa-chart-bar"></i>
+                                        </div>
+                                        <div class="ms-3">
+                                            <h5 class="card-title mb-1">View Results</h5>
+                                            <p class="card-text text-muted">Check your grades and GPA</p>
+                                        </div>
+                                    </div>
+                                    <div class="action-stats mb-3">
+                                        <span class="badge bg-info">{{ auth()->user()->student->grades()->count() }} Grades</span>
+                                        <span class="badge bg-success ms-2">{{ auth()->user()->student->calculateGPA() ? 'GPA: ' . number_format(auth()->user()->student->calculateGPA(), 2) : 'No GPA' }}</span>
+                                    </div>
+                                    <a href="{{ route('student.results') }}" class="btn btn-success btn-custom w-100">
+                                        <i class="fas fa-eye me-2"></i>View Results
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0"><i class="fas fa-history me-2 text-info"></i>Recent Activity</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="activity-item">
+                                        <i class="fas fa-circle text-success me-2"></i>
+                                        <span>Dashboard accessed - {{ now()->format('M d, Y H:i') }}</span>
+                                    </div>
+                                    @if(auth()->user()->student->registrations()->where('status', 'approved')->count() > 0)
+                                    <div class="activity-item">
+                                        <i class="fas fa-circle text-primary me-2"></i>
+                                        <span>{{ auth()->user()->student->registrations()->where('status', 'approved')->count() }} courses currently registered</span>
+                                    </div>
+                                    @endif
+                                    <div class="activity-item">
+                                        <i class="fas fa-circle text-warning me-2"></i>
+                                        <span>Ready to view latest results and register for new courses</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>

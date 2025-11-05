@@ -333,7 +333,7 @@
                 @include('layouts.topbar')
 
                 <!-- Page Content -->
-                <main class="p-4">
+                <main class="p-3 p-md-4">
                     @if(session('success'))
                         <script>
                             Swal.fire({
