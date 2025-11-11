@@ -19,7 +19,7 @@
                         <div class="card stat-card text-white bg-gradient-primary">
                             <div class="card-body text-center">
                                 <i class="fas fa-graduation-cap fa-2x mb-2"></i>
-                                <h4 class="card-title mb-1">{{ auth()->user()->student->calculateGPA() ?? 'N/A' }}</h4>
+                                <h4 class="card-title mb-1">{{ auth()->user()->student ? auth()->user()->student->calculateGPA() : 'N/A' }}</h4>
                                 <p class="card-text mb-0">Current GPA</p>
                             </div>
                         </div>

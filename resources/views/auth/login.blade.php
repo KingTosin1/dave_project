@@ -23,9 +23,7 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 20px;
         }
 
         .login-container {
@@ -33,8 +31,59 @@
             border-radius: 15px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            max-width: 400px;
             width: 100%;
+        }
+
+        .contributors-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .contributors-header {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .contributors-header h4 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .contributors-body {
+            padding: 20px;
+        }
+
+        .contributors-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .contributors-list li {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .contributors-list li:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .contributor-name {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .contributor-matric {
+            font-size: 14px;
+            color: #6b7280;
+            margin-top: 2px;
         }
 
         .login-header {
@@ -140,59 +189,100 @@
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-header">
-            <i class="fas fa-graduation-cap fa-3x mb-3"></i>
-            <h2>Course Registration System</h2>
-            <p>Sign in to your account</p>
-        </div>
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-start">
+            <div class="col-md-7 col-12">
+                <div class="login-container">
+                    <div class="login-header">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="mb-3" style="width: 3rem; height: 3rem; fill: #ffffff;">
+                            <circle cx="50" cy="50" r="45" fill="#ffffff" stroke="#4f46e5" stroke-width="2"/>
+                            <path d="M25 35 L50 20 L75 35 L75 65 L50 80 L25 65 Z" fill="none" stroke="#4f46e5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M35 45 L50 38 L65 45" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="50" cy="55" r="8" fill="none" stroke="#4f46e5" stroke-width="2"/>
+                            <path d="M42 55 L58 55" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M50 47 L50 63" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <h2>Course Registration System</h2>
+                        <p>Sign in to your account</p>
+                    </div>
 
-        <div class="login-body">
-            <!-- Session Status -->
-            @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
+                    <div class="login-body">
+                        <!-- Session Status -->
+                        @if (session('status'))
+                            <div class="alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
+
+                            <!-- Email Address -->
+                            <div class="form-floating">
+                                <input id="email" class="form-control" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" placeholder="Email Address">
+                                <label for="email">Email Address</label>
+                                @error('email')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Password -->
+                            <div class="form-floating">
+                                <input id="password" class="form-control" type="password" name="password" required autocomplete="current-password" placeholder="Password">
+                                <label for="password">Password</label>
+                                @error('password')
+                                    <div class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- Remember Me -->
+                            <div class="form-check">
+                                <input id="remember_me" type="checkbox" class="form-check-input" name="remember">
+                                <label for="remember_me" class="form-check-label">Remember me</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-login">
+                                <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="login-footer">
+                        @if (Route::has('password.request'))
+                            <a href="{{ route('password.request') }}">Forgot your password?</a>
+                        @endif
+                        <p class="mt-2 mb-0">Don't have an account? <a href="{{ route('register') }}">Register here</a></p>
+                    </div>
                 </div>
-            @endif
+            </div>
 
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-
-                <!-- Email Address -->
-                <div class="form-floating">
-                    <input id="email" class="form-control" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" placeholder="Email Address">
-                    <label for="email">Email Address</label>
-                    @error('email')
-                        <div class="text-danger mt-1">{{ $message }}</div>
-                    @enderror
+            <div class="col-md-5 col-12 mt-4 mt-md-0">
+                <div class="contributors-card">
+                    <div class="contributors-header">
+                        <h4>Project Contributors</h4>
+                    </div>
+                    <div class="contributors-body">
+                        <ul class="contributors-list">
+                            <li>
+                                <div class="contributor-name">Ikati Tanitoluwa David</div>
+                                <div class="contributor-matric">23/105/01/P/0123</div>
+                            </li>
+                            <li>
+                                <div class="contributor-name">Erinle Rofiat Omowunmi</div>
+                                <div class="contributor-matric">23/105/01/P/0100</div>
+                            </li>
+                            <li>
+                                <div class="contributor-name">Akinyemi Abisola Janet</div>
+                                <div class="contributor-matric">23/105/01/P/0078</div>
+                            </li>
+                            <li>
+                                <div class="contributor-name">Jimoh Quadri Akorede</div>
+                                <div class="contributor-matric">23/105/01/P/0052</div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-
-                <!-- Password -->
-                <div class="form-floating">
-                    <input id="password" class="form-control" type="password" name="password" required autocomplete="current-password" placeholder="Password">
-                    <label for="password">Password</label>
-                    @error('password')
-                        <div class="text-danger mt-1">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <!-- Remember Me -->
-                <div class="form-check">
-                    <input id="remember_me" type="checkbox" class="form-check-input" name="remember">
-                    <label for="remember_me" class="form-check-label">Remember me</label>
-                </div>
-
-                <button type="submit" class="btn btn-login">
-                    <i class="fas fa-sign-in-alt me-2"></i>Sign In
-                </button>
-            </form>
-        </div>
-
-        <div class="login-footer">
-            @if (Route::has('password.request'))
-                <a href="{{ route('password.request') }}">Forgot your password?</a>
-            @endif
-            <p class="mt-2 mb-0">Don't have an account? <a href="{{ route('register') }}">Register here</a></p>
+            </div>
         </div>
     </div>
 

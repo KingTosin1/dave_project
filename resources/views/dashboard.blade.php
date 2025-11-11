@@ -536,7 +536,7 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <h4 class="card-title mb-1">{{ auth()->user()->student->calculateGPA() ?? 'N/A' }}</h4>
+                                            <h4 class="card-title mb-1">{{ auth()->user()->student ? auth()->user()->student->calculateGPA() : 'N/A' }}</h4>
                                             <p class="card-text mb-0">Current GPA</p>
                                         </div>
                                         <div class="stat-icon">
@@ -544,7 +544,7 @@
                                         </div>
                                     </div>
                                     <div class="progress mt-2" style="height: 4px;">
-                                        <div class="progress-bar" style="width: {{ auth()->user()->student->calculateGPA() ? '100' : '0' }}%"></div>
+                                        <div class="progress-bar" style="width: {{ auth()->user()->student && auth()->user()->student->calculateGPA() ? '100' : '0' }}%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -554,7 +554,7 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <h4 class="card-title mb-1">{{ auth()->user()->student->registrations()->where('status', 'approved')->count() }}</h4>
+                                            <h4 class="card-title mb-1">{{ auth()->user()->student ? auth()->user()->student->registrations()->where('status', 'approved')->count() : 0 }}</h4>
                                             <p class="card-text mb-0">Registered Courses</p>
                                         </div>
                                         <div class="stat-icon">
@@ -562,7 +562,7 @@
                                         </div>
                                     </div>
                                     <div class="progress mt-2" style="height: 4px;">
-                                        <div class="progress-bar" style="width: {{ auth()->user()->student->registrations()->where('status', 'approved')->count() > 0 ? '100' : '0' }}%"></div>
+                                        <div class="progress-bar" style="width: {{ auth()->user()->student && auth()->user()->student->registrations()->where('status', 'approved')->count() > 0 ? '100' : '0' }}%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -572,7 +572,7 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <h4 class="card-title mb-1">{{ auth()->user()->student->level }}</h4>
+                                            <h4 class="card-title mb-1">{{ auth()->user()->student ? auth()->user()->student->level : 'N/A' }}</h4>
                                             <p class="card-text mb-0">Current Level</p>
                                         </div>
                                         <div class="stat-icon">
@@ -608,8 +608,8 @@
                                         </div>
                                     </div>
                                     <div class="action-stats mb-3">
-                                        <span class="badge bg-primary">{{ auth()->user()->student->registrations()->where('status', 'approved')->count() }} Registered</span>
-                                        <span class="badge bg-warning ms-2">{{ auth()->user()->student->registrations()->where('status', 'pending')->count() }} Pending</span>
+                                        <span class="badge bg-primary">{{ auth()->user()->student ? auth()->user()->student->registrations()->where('status', 'approved')->count() : 0 }} Registered</span>
+                                        <span class="badge bg-warning ms-2">{{ auth()->user()->student ? auth()->user()->student->registrations()->where('status', 'pending')->count() : 0 }} Pending</span>
                                     </div>
                                     <a href="{{ route('student.register') }}" class="btn btn-primary btn-custom w-100">
                                         <i class="fas fa-plus me-2"></i>Register Courses
@@ -630,8 +630,8 @@
                                         </div>
                                     </div>
                                     <div class="action-stats mb-3">
-                                        <span class="badge bg-info">{{ auth()->user()->student->grades()->count() }} Grades</span>
-                                        <span class="badge bg-success ms-2">{{ auth()->user()->student->calculateGPA() ? 'GPA: ' . number_format(auth()->user()->student->calculateGPA(), 2) : 'No GPA' }}</span>
+                                        <span class="badge bg-info">{{ auth()->user()->student ? auth()->user()->student->grades()->count() : 0 }} Grades</span>
+                                        <span class="badge bg-success ms-2">{{ auth()->user()->student && auth()->user()->student->calculateGPA() ? 'GPA: ' . number_format(auth()->user()->student->calculateGPA(), 2) : 'No GPA' }}</span>
                                     </div>
                                     <a href="{{ route('student.results') }}" class="btn btn-success btn-custom w-100">
                                         <i class="fas fa-eye me-2"></i>View Results
@@ -653,7 +653,7 @@
                                         <i class="fas fa-circle text-success me-2"></i>
                                         <span>Dashboard accessed - {{ now()->format('M d, Y H:i') }}</span>
                                     </div>
-                                    @if(auth()->user()->student->registrations()->where('status', 'approved')->count() > 0)
+                                    @if(auth()->user()->student && auth()->user()->student->registrations()->where('status', 'approved')->count() > 0)
                                     <div class="activity-item">
                                         <i class="fas fa-circle text-primary me-2"></i>
                                         <span>{{ auth()->user()->student->registrations()->where('status', 'approved')->count() }} courses currently registered</span>
