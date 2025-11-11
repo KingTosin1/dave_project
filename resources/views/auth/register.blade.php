@@ -134,56 +134,31 @@
 </head>
 <body>
     <div class="register-container">
-        <div class="register-header">
-            <i class="fas fa-user-plus fa-3x mb-3"></i>
-            <h2>Join Course Registration System</h2>
-            <p>Create your account</p>
-        </div>
+                    <div class="register-header">
+                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="mb-3" style="width: 3rem; height: 3rem; fill: #ffffff;">
+                            <circle cx="50" cy="50" r="45" fill="#ffffff" stroke="#4f46e5" stroke-width="2"/>
+                            <path d="M25 35 L50 20 L75 35 L75 65 L50 80 L25 65 Z" fill="none" stroke="#4f46e5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M35 45 L50 38 L65 45" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"/>
+                            <circle cx="50" cy="55" r="8" fill="none" stroke="#4f46e5" stroke-width="2"/>
+                            <path d="M42 55 L58 55" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M50 47 L50 63" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <h2>Join Course Registration System</h2>
+                        <p>Create your account</p>
+                    </div>
 
         <div class="register-body">
-            <form method="POST" action="{{ route('register') }}">
-                @csrf
+            <div class="alert alert-info" role="alert">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Registration Not Available</strong><br>
+                User registration is managed by the system administrator. Please contact the administrator to create your account.
+            </div>
 
-                <!-- Name -->
-                <div class="form-floating">
-                    <input id="name" class="form-control" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="Full Name">
-                    <label for="name">Full Name</label>
-                    @error('name')
-                        <div class="text-danger mt-1">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <!-- Email Address -->
-                <div class="form-floating">
-                    <input id="email" class="form-control" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="Email Address">
-                    <label for="email">Email Address</label>
-                    @error('email')
-                        <div class="text-danger mt-1">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <!-- Password -->
-                <div class="form-floating">
-                    <input id="password" class="form-control" type="password" name="password" required autocomplete="new-password" placeholder="Password">
-                    <label for="password">Password</label>
-                    @error('password')
-                        <div class="text-danger mt-1">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <!-- Confirm Password -->
-                <div class="form-floating">
-                    <input id="password_confirmation" class="form-control" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm Password">
-                    <label for="password_confirmation">Confirm Password</label>
-                    @error('password_confirmation')
-                        <div class="text-danger mt-1">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <button type="submit" class="btn btn-register">
-                    <i class="fas fa-user-plus me-2"></i>Create Account
-                </button>
-            </form>
+            <div class="text-center">
+                <a href="{{ route('login') }}" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt me-2"></i>Go to Login
+                </a>
+            </div>
         </div>
 
         <div class="register-footer">
